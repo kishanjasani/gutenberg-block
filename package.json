@@ -1,0 +1,24 @@
+{
+  "name": "gutenberg-block",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:scripts": "wp-scripts build",
+    "build:start": "wp-scripts start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kishanjasani/gutenberg-block.git"
+  },
+  "author": "Kishan Jasani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kishanjasani/gutenberg-block/issues"
+  },
+  "homepage": "https://github.com/kishanjasani/gutenberg-block#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "^12.1.1"
+  }
+}

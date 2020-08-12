@@ -14,7 +14,11 @@ registerBlockType( 'jk/custom-cta', {
 	// custom functions
 
 	// built-in functions
-	edit() {},
+	edit() {
+		return (
+			<div>Hello</div>
+		);
+	},
 
 	save() {},
 } );
