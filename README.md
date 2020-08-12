@@ -1,1 +1,1 @@
-# gutenberg-block
+# Gutenberg Block Example
