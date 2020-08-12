@@ -9,16 +9,29 @@ registerBlockType( 'jk/custom-cta', {
 	category: 'layout',
 
 	// custom attributes
-	attributes: {},
-
-	// custom functions
+	attributes: {
+		author: {
+			type: 'string'
+		}
+	},
 
 	// built-in functions
-	edit() {
+	edit( { attributes, setAttributes } ) {
+		// custom functions
+		function updateAuthor( e ) {
+			setAttributes( { author: e.target.value } );
+		}
+
 		return (
-			<div>Hello</div>
+			<input type="text" value={ attributes.author } onChange={ updateAuthor } />
 		);
 	},
 
-	save() {},
+	save( { attributes } ) {
+		return (
+			<div>
+				<p> Author Name: <i> { attributes.author } </i> </p>
+			</div>
+		);
+	},
 } );
