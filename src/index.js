@@ -1,11 +1,12 @@
 const { registerBlockType } = wp.blocks;
 const { RichText } = wp.editor;
+const { __ } = wp.i18n;
 
 registerBlockType( 'jk/custom-cta', {
 
 	// built-in attributes
-	title: 'Custom Block',
-	description: 'Block to generate a custom Call to Action',
+	title: __( 'Custom Block' ),
+	description: __( 'Block to generate a custom Call to Action' ),
 	icon: 'format-image',
 	category: 'layout',
 
@@ -37,16 +38,16 @@ registerBlockType( 'jk/custom-cta', {
 		}
 
 		return ( [
-			<div className="">
+			<div className="cta-container">
 				<RichText key="editable"
 						  tagName="h2"
-						  placeholder="Your CTA Title"
+						  placeholder={ __( "Your CTA Title", 'jk' ) }
 						  value={ title }
 						  onChange={ onChangeTitle } />
 
 				<RichText key="editable"
 					tagName="p"
-					placeholder="Your CTA Description"
+					placeholder= { __( "Your CTA Description", 'jk' ) }
 					value={ body }
 					onChange={ onChangeBody } />
 			</div>

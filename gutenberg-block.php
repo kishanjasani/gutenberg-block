@@ -46,7 +46,7 @@ function jk_gutenberg_default_colors() {
 add_action( 'init', 'jk_gutenberg_default_colors' );
 
 function jk_gutenberg_blocks() {
-	wp_register_script( 'custom-cta-js', plugins_url( '/build/index.js', __FILE__ ), array( 'wp-blocks', 'wp-editor' ) );
+	wp_register_script( 'custom-cta-js', plugins_url( '/build/index.js', __FILE__ ), array( 'wp-blocks', 'wp-editor', 'wp-i18n' ) );
 	register_block_type( 'jk/custom-cta', array(
 		'editor_script' => 'custom-cta-js',
 	) );
