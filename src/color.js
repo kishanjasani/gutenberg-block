@@ -1,6 +1,7 @@
 const { registerBlockType } = wp.blocks;
-const { RichText } = wp.editor;
+const { RichText, InspectorControls, ColorPalette } = wp.editor;
 const { __ } = wp.i18n;
+const { PanelBody } = wp.components;
 
 registerBlockType( 'jk/custom-color', {
 
@@ -21,13 +22,21 @@ registerBlockType( 'jk/custom-color', {
 			type: 'string',
 			source: 'html',
 			selector: 'p'
+		},
+		titleColor: {
+			type: 'string',
+			default: 'black'
+		},
+		bodyColor: {
+			type: 'string',
+			default: 'black'
 		}
 	},
 
 	// built-in functions
 	edit( { attributes, setAttributes } ) {
 
-		const { title, body } = attributes;
+		const { title, body, titleColor, bodyColor } = attributes;
 		// custom functions
 		function onChangeTitle( newTitle ) {
 			setAttributes( { title: newTitle } );
@@ -37,30 +46,52 @@ registerBlockType( 'jk/custom-color', {
 			setAttributes( { body: newBody } );
 		}
 
-		return ( [
-			<div className="cta-container">
-			<RichText key="editable"
-		tagName="h2"
-		placeholder={ __( "Your CTA Title", 'jk' ) }
-		value={ title }
-		onChange={ onChangeTitle } />
+		function onTitleColorChange( newColor ) {
+			setAttributes( { titleColor: newColor } );
+		}
 
-		<RichText key="editable"
-		tagName="p"
-		placeholder= { __( "Your CTA Description", 'jk' ) }
-		value={ body }
-		onChange={ onChangeBody } />
-		</div>
-	] );
+		function onBodyColorChange( newColor ) {
+			setAttributes( { bodyColor: newColor } );
+		}
+
+		return ( [
+			<InspectorControls style={ { marginBottom: '40px' } }>
+				<PanelBody title={ __( 'Font Color Settings', 'jk' ) }>
+					<p><strong> Select a title color: </strong></p>
+					<ColorPalette value={ titleColor }
+								  onChange={ onTitleColorChange } />
+
+					<p><strong> Select a text color: </strong></p>
+					<ColorPalette value={ bodyColor }
+					onChange={ onBodyColorChange } />
+				</PanelBody>
+			</InspectorControls>,
+			<div className="cta-container">
+				<RichText key="editable"
+					tagName="h2"
+					placeholder={ __( 'Your CTA Title', 'jk' ) }
+					value={ title }
+					onChange={ onChangeTitle }
+					style={ { color: titleColor } } />
+
+				<RichText key="editable"
+					tagName="p"
+					placeholder= { __( "Your CTA Description", 'jk' ) }
+					value={ body }
+					onChange={ onChangeBody }
+					style={ { color: bodyColor } }/>
+			</div>
+		] );
 	},
 
 	save( { attributes } ) {
-		const { title, body } = attributes;
+		const { title, body, titleColor, bodyColor } = attributes;
 		return (
 			<div className="cta-container">
-			<h2>{ title }</h2>
+			<h2 style={ { color: titleColor } }>{ title }</h2>
 			<RichText.Content tagName="p"
-		value={ body } />
+				style= { { color: bodyColor } }
+				value={ body } />
 		</div>
 	);
 	},
