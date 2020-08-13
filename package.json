@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:scripts": "wp-scripts build",
     "build:start": "wp-scripts start",
+    "build:custom": "wp-scripts build src/*.js --output-path=build/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

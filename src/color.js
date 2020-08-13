@@ -2,11 +2,11 @@ const { registerBlockType } = wp.blocks;
 const { RichText } = wp.editor;
 const { __ } = wp.i18n;
 
-registerBlockType( 'jk/custom-cta', {
+registerBlockType( 'jk/custom-color', {
 
 	// built-in attributes
-	title: __( 'Custom Block' ),
-	description: __( 'Block to generate a custom Call to Action' ),
+	title: __( 'Custom Color Pallate' ),
+	description: __( 'Block to generate a custom Color Pallate to Action' ),
 	icon: 'format-image',
 	category: 'layout',
 
@@ -39,29 +39,29 @@ registerBlockType( 'jk/custom-cta', {
 
 		return ( [
 			<div className="cta-container">
-				<RichText key="editable"
-						  tagName="h2"
-						  placeholder={ __( "Your CTA Title", 'jk' ) }
-						  value={ title }
-						  onChange={ onChangeTitle } />
+			<RichText key="editable"
+		tagName="h2"
+		placeholder={ __( "Your CTA Title", 'jk' ) }
+		value={ title }
+		onChange={ onChangeTitle } />
 
-				<RichText key="editable"
-					tagName="p"
-					placeholder= { __( "Your CTA Description", 'jk' ) }
-					value={ body }
-					onChange={ onChangeBody } />
-			</div>
-		] );
+		<RichText key="editable"
+		tagName="p"
+		placeholder= { __( "Your CTA Description", 'jk' ) }
+		value={ body }
+		onChange={ onChangeBody } />
+		</div>
+	] );
 	},
 
 	save( { attributes } ) {
 		const { title, body } = attributes;
 		return (
 			<div className="cta-container">
-				<h2>{ title }</h2>
-				<RichText.Content tagName="p"
-								  value={ body } />
-			</div>
-		);
+			<h2>{ title }</h2>
+			<RichText.Content tagName="p"
+		value={ body } />
+		</div>
+	);
 	},
 } );
