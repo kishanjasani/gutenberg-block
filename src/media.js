@@ -91,7 +91,12 @@ registerBlockType( 'jk/custom-media', {
 					/>
 				</PanelBody>
 			</InspectorControls>,
-			<div className="cta-container">
+			<div className="cta-container" style={ {
+				backgroundImage: `url( ${ backgroundImage } )`,
+				backgroundSize: 'cover',
+				backgroundPosition: 'center',
+				backgroundRepeat: 'no-repeat'
+			} }>
 				<RichText key="editable"
 					tagName="h2"
 					placeholder={ __( 'Your CTA Title', 'jk' ) }
@@ -110,9 +115,14 @@ registerBlockType( 'jk/custom-media', {
 	},
 
 	save( { attributes } ) {
-		const { title, body, titleColor, bodyColor } = attributes;
+		const { title, body, titleColor, bodyColor, backgroundImage } = attributes;
 		return (
-			<div className="cta-container">
+			<div className="cta-container" style={ {
+				backgroundImage: `url( ${ backgroundImage } )`,
+				backgroundSize: 'cover',
+				backgroundPosition: 'center',
+				backgroundRepeat: 'no-repeat'
+			} }>
 			<h2 style={ { color: titleColor } }>{ title }</h2>
 			<RichText.Content tagName="p"
 				style= { { color: bodyColor } }
