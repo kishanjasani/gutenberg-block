@@ -48,12 +48,18 @@ add_action( 'init', 'jk_gutenberg_default_colors' );
 function jk_gutenberg_blocks() {
 	wp_register_script( 'custom-cta-js', plugins_url( '/build/index.js', __FILE__ ), array( 'wp-blocks', 'wp-editor', 'wp-i18n' ) );
 	wp_register_script( 'custom-color-js', plugins_url( '/build/color.js', __FILE__ ), array( 'wp-blocks', 'wp-editor', 'wp-i18n', 'wp-components' ) );
+	wp_register_script( 'custom-media', plugins_url( '/build/media.js', __FILE__ ), array( 'wp-blocks', 'wp-editor', 'wp-i18n' ) );
+
 	register_block_type( 'jk/custom-cta', array(
 		'editor_script' => 'custom-cta-js',
 	) );
 
 	register_block_type( 'jk/custom-color', array(
 		'editor_script' => 'custom-color-js',
+	) );
+
+	register_block_type( 'jk/custom-media', array(
+		'editor_script' => 'custom-media',
 	) );
 }
 add_action( 'init', 'jk_gutenberg_blocks' );

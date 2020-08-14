@@ -1,13 +1,13 @@
 const { registerBlockType } = wp.blocks;
-const { RichText, InspectorControls, ColorPalette } = wp.editor;
+const { RichText, InspectorControls, ColorPalette, MediaUpload } = wp.editor;
 const { __ } = wp.i18n;
-const { PanelBody } = wp.components;
+const { PanelBody, IconButton } = wp.components;
 
-registerBlockType( 'jk/custom-color', {
+registerBlockType( 'jk/custom-media', {
 
 	// built-in attributes
-	title: __( 'Custom Color Pallate' ),
-	description: __( 'Block to generate a custom Color Pallate to Action' ),
+	title: __( 'Custom Image Upload' ),
+	description: __( 'Block to generate a custom Image Upload' ),
 	icon: 'format-image',
 	category: 'layout',
 
@@ -59,7 +59,8 @@ registerBlockType( 'jk/custom-color', {
 		}
 
 		function onSelectImage( newImage ) {
-			setAttributes( { backgroundImage: newImage } );
+			console.log( newImage );
+			setAttributes( { backgroundImage: newImage.sizes.full.url } );
 		}
 
 		return ( [
@@ -67,11 +68,27 @@ registerBlockType( 'jk/custom-color', {
 				<PanelBody title={ __( 'Font Color Settings', 'jk' ) }>
 					<p><strong> Select a title color: </strong></p>
 					<ColorPalette value={ titleColor }
-								  onChange={ onTitleColorChange } />
+						onChange={ onTitleColorChange } />
 
 					<p><strong> Select a text color: </strong></p>
 					<ColorPalette value={ bodyColor }
-					onChange={ onBodyColorChange } />
+						onChange={ onBodyColorChange } />
+				</PanelBody>
+				<PanelBody title={ __( 'Background Image Settings', 'jk' ) }>
+					<p><strong> Select a background Image: </strong></p>
+					<MediaUpload
+						onSelect={ onSelectImage }
+						type="image"
+						value={ backgroundImage }
+						render={ ( { open } ) => {
+						return ( <IconButton
+							onClick={ open }
+							icon="upload"
+							className="editor-media-placeholder__button is-button is-default is-large">
+								Background Image
+							</IconButton> )
+						} }
+					/>
 				</PanelBody>
 			</InspectorControls>,
 			<div className="cta-container">
@@ -96,11 +113,11 @@ registerBlockType( 'jk/custom-color', {
 		const { title, body, titleColor, bodyColor } = attributes;
 		return (
 			<div className="cta-container">
-				<h2 style={ { color: titleColor } }>{ title }</h2>
-				<RichText.Content tagName="p"
-					style= { { color: bodyColor } }
-					value={ body } />
-			</div>
-		);
+			<h2 style={ { color: titleColor } }>{ title }</h2>
+			<RichText.Content tagName="p"
+				style= { { color: bodyColor } }
+				value={ body } />
+		</div>
+	);
 	},
 } );
