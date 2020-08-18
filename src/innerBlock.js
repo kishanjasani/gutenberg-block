@@ -1,5 +1,5 @@
 const { registerBlockType } = wp.blocks;
-const { RichText, InspectorControls, ColorPalette, MediaUpload, InnerBlocks } = wp.editor;
+const { RichText, InspectorControls, ColorPalette, MediaUpload, InnerBlocks, BlockControls, AlignmentToolbar } = wp.editor;
 const { __ } = wp.i18n;
 const { PanelBody, IconButton, RangeControl } = wp.components;
 
@@ -24,6 +24,10 @@ registerBlockType( 'jk/inner-block', {
 			type: 'string',
 			source: 'html',
 			selector: 'p'
+		},
+		alignment: {
+			type: 'string',
+			default: 'none'
 		},
 		titleColor: {
 			type: 'string',
@@ -50,7 +54,7 @@ registerBlockType( 'jk/inner-block', {
 	// built-in functions
 	edit( { attributes, setAttributes } ) {
 
-		const { title, body, titleColor, bodyColor, backgroundImage, overlayColor, overlayOpacity } = attributes;
+		const { title, body, titleColor, bodyColor, backgroundImage, overlayColor, overlayOpacity, alignment } = attributes;
 		// custom functions
 		function onChangeTitle( newTitle ) {
 			setAttributes( { title: newTitle } );
@@ -81,6 +85,9 @@ registerBlockType( 'jk/inner-block', {
 			setAttributes( { overlayOpacity: newColor } );
 		}
 
+		function onChangeAlignment( newAlignment ) {
+			setAttributes( { newAlignment: newAlignment } );
+		}
 
 		return ( [
 			<InspectorControls style={ { marginBottom: '40px' } }>
@@ -130,12 +137,17 @@ registerBlockType( 'jk/inner-block', {
 					backgroundRepeat: 'no-repeat'
 			} }>
 			<div className='cta-overlay' style={ { background: overlayColor, opacity: overlayOpacity } } ></div>
+		    {
+		    	<BlockControls>
+					<AlignmentToolbar value={ alignment } onChange={ onChangeAlignment } />
+		        </BlockControls>
+		    }
 				<RichText key="editable"
 					tagName="h2"
 					placeholder={ __( 'Your CTA Title', 'jk' ) }
 					value={ title }
 					onChange={ onChangeTitle }
-					style={ { color: titleColor } }
+					style={ { color: titleColor, textAlign: alignment } }
 				/>
 
 				<RichText key="editable"
@@ -143,7 +155,7 @@ registerBlockType( 'jk/inner-block', {
 					placeholder= { __( "Your CTA Description", 'jk' ) }
 					value={ body }
 					onChange={ onChangeBody }
-					style={ { color: bodyColor } }
+					style={ { color: bodyColor, textAlign: alignment } }
 				/>
 
 				<InnerBlocks allowedBlocks={ ALLOWED_BLOCKS } />
@@ -153,7 +165,7 @@ registerBlockType( 'jk/inner-block', {
 	},
 
 	save( { attributes } ) {
-		const { title, body, titleColor, bodyColor, backgroundImage, overlayColor, overlayOpacity } = attributes;
+		const { title, body, titleColor, bodyColor, backgroundImage, overlayColor, overlayOpacity, alignment } = attributes;
 		return (
 			<div className="cta-container" style={ {
 				backgroundImage: `url( ${ backgroundImage } )`,
@@ -162,9 +174,9 @@ registerBlockType( 'jk/inner-block', {
 				backgroundRepeat: 'no-repeat'
 			} }>
 			<div className='cta-overlay' style={ { background: overlayColor, opacity: overlayOpacity } } ></div>
-				<h2 style={ { color: titleColor } }>{ title }</h2>
+				<h2 style={ { color: titleColor, textAlign: alignment } }>{ title }</h2>
 				<RichText.Content tagName="p"
-					style= { { color: bodyColor } }
+					style= { { color: bodyColor, textAlign: alignment } }
 					value={ body }
 				/>
 				<InnerBlocks.Content />
